@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -24,6 +25,26 @@ public class MainActivity extends ActionBarActivity {
         searchBtn = (Button) findViewById(R.id.searchBtn);
         list = (ListView) findViewById(R.id.resultsList);
 
+        // Hook-up events.
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String searchText = searchBox
+                        .getText()
+                        .toString();
+
+                RepositorySearchQuery query = RepositorySearchQuery.fromString(searchText);
+
+                searchForRepositories(query);
+            }
+        });
+
+    }
+
+    private void searchForRepositories(RepositorySearchQuery query) {
+        SearchGithubRepositories task = new SearchGithubRepositories();
+
+        task.execute(query);
     }
 
 
