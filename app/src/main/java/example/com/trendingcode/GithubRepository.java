@@ -26,7 +26,7 @@ public class GithubRepository
      * 
      * @return id
      */
-    public String getID()
+    public Integer getID()
     {
         return id;
     }
