@@ -1,3 +1,5 @@
+package example.com.trendingcode;
+
 public class Query
 {
     private Integer id;
