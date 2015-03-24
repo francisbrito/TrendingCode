@@ -62,7 +62,7 @@ public class SearchGithubRepositories
                 stringBuffer.append(line + "\n");
             }
 
-            String jsonStr = reader.toString();
+            String jsonStr = stringBuffer.toString();
 
             Log.d(TAG, "JSON: " + jsonStr);
 
