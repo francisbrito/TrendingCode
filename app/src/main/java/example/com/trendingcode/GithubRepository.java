@@ -1,6 +1,17 @@
 package example.com.trendingcode;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class GithubRepository {
+    private static final String ID_FIELD = "id";
+    private static final String NAME_FIELD = "name";
+    private static final String FULL_NAME_FIELD = "full_name";
+    private static final String DESCRIPTION_FIELD = "description";
+    private static final String STARS_FIELD = "stargazers_count";
+    private static final String WATCHERS_FIELD = "watchers_count";
+    private static final String LANGUAGE_FIELD = "language";
+
     private Integer id;
     private String name;
     private String full_name;
@@ -11,8 +22,23 @@ public class GithubRepository {
 
     /**
      * Construct.
+     * @param id
+     * @param name
+     * @param fullName
+     * @param description
+     * @param stars
+     * @param watchers
+     * @param language
      */
-    public GithubRepository() {
+    public GithubRepository(Integer id, String name, String fullName, String description,
+                            Integer stars, Integer watchers, String language) {
+        this.id = id;
+        this.name = name;
+        this.full_name = fullName;
+        this.description = description;
+        this.stargazers_count = stars;
+        this.watchers_count = watchers;
+        this.language = language;
     }
 
     /**
@@ -143,5 +169,19 @@ public class GithubRepository {
      */
     public void setLanguage(String val) {
         this.language = val;
+    }
+
+    public static GithubRepository fromJSON(String jsonString) throws JSONException {
+        JSONObject json = new JSONObject(jsonString);
+
+        Integer id = json.getInt(ID_FIELD);
+        String name = json.getString(NAME_FIELD);
+        String fullName = json.getString(FULL_NAME_FIELD);
+        String description = json.getString(DESCRIPTION_FIELD);
+        Integer stars = json.getInt(STARS_FIELD);
+        Integer watchers = json.getInt(WATCHERS_FIELD);
+        String language = json.getString(LANGUAGE_FIELD);
+
+        return new GithubRepository(id, name, fullName, description, stars, watchers, language);
     }
 }
