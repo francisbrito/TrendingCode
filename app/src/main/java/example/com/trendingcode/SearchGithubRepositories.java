@@ -29,10 +29,7 @@ public class SearchGithubRepositories
 
         String uri = new Uri.Builder()
                 .encodedPath(GITHUB_REPOSITORY_SEARCH_API_ENDPOINT)
-                .appendQueryParameter(GithubRepositorySearchQuery.QUERY_FIELD, query.getQuery())
-                .appendQueryParameter(
-                        GithubRepositorySearchQuery.LANGUAGE_FIELD,
-                        query.getLanguage())
+                .encodedQuery(GithubRepositorySearchQuery.QUERY_FIELD + "=" + query.buildQuery())
                 .appendQueryParameter(GithubRepositorySearchQuery.SORT_FIELD, query.getSort())
                 .appendQueryParameter(GithubRepositorySearchQuery.ORDER_FIELD, query.getOrder())
                 .build()
