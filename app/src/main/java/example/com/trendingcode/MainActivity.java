@@ -10,8 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import java.util.Comparator;
-
 
 public class MainActivity extends ActionBarActivity {
     EditText searchBox;
@@ -43,7 +41,7 @@ public class MainActivity extends ActionBarActivity {
                         .getText()
                         .toString();
 
-                RepositorySearchQuery query = RepositorySearchQuery.fromString(searchText);
+                GithubRepositorySearchQuery query = GithubRepositorySearchQuery.fromString(searchText);
 
                 searchForRepositories(query);
             }
@@ -51,7 +49,7 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-    private void searchForRepositories(RepositorySearchQuery query) {
+    private void searchForRepositories(GithubRepositorySearchQuery query) {
         SearchGithubRepositories task = new SearchGithubRepositories() {
             @Override
             protected void onPostExecute(GithubSearchResult result) {

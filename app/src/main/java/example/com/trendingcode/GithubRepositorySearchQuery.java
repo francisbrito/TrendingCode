@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 /**
  * Created by francis on 03/24/15.
  */
-public class RepositorySearchQuery {
+public class GithubRepositorySearchQuery {
     public static final String QUERY_FIELD = "q";
     public static final String LANGUAGE_FIELD = "language";
     public static final String LANGUAGE_SHORT_FIELD = "lang";
@@ -18,25 +18,25 @@ public class RepositorySearchQuery {
     public static final String ORDER_FIELD = "order";
     public static final String ORDER_FIELD_LETTER = "o";
 
-    private static final String TAG = RepositorySearchQuery.class.getSimpleName();
+    private static final String TAG = GithubRepositorySearchQuery.class.getSimpleName();
 
     private final String mQuery;
     private final String mLang;
     private final String mSort;
     private final String mOrder;
 
-    public RepositorySearchQuery(String query, String lang, String sort, String order) {
+    public GithubRepositorySearchQuery(String query, String lang, String sort, String order) {
         this.mQuery = query;
         this.mLang = lang;
         this.mSort = sort;
         this.mOrder = order;
     }
 
-    public static RepositorySearchQuery create(String query, String lang, String sort, String order) {
-        return new RepositorySearchQuery(query, lang, sort, order);
+    public static GithubRepositorySearchQuery create(String query, String lang, String sort, String order) {
+        return new GithubRepositorySearchQuery(query, lang, sort, order);
     }
 
-    public static RepositorySearchQuery fromString(String queryString) {
+    public static GithubRepositorySearchQuery fromString(String queryString) {
         Pattern regex = Pattern.compile("((?:l(?:ang(?:uage)?)?|s(?:ort)?|o(?:rder)?):(?:\\w+))");
         Matcher matcher = regex.matcher(queryString);
 
@@ -74,7 +74,7 @@ public class RepositorySearchQuery {
             }
         }
 
-        return RepositorySearchQuery.create(query, lang, sort, order);
+        return GithubRepositorySearchQuery.create(query, lang, sort, order);
     }
 
     public String getQuery() {
