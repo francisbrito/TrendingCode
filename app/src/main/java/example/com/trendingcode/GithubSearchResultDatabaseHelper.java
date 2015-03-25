@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by dripoll24 on 3/25/2015.
  */
-public class DBHelper extends SQLiteOpenHelper {
+public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
 
     SQLiteDatabase db;
 
@@ -31,7 +31,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CREATE_TABLE = "create table " + TABLE_NAME + "(" + ID + "integer primary key" +  NAME + " text," +  FULL_NAME + " text," +  LANGUAGE + " text,"+
                                                                                      DESCRIPTION + " text," + STARTGAZERS + " integer," + WATCHERS + " integer" + ")";
 
-    public DBHelper(Context context) {
+    public GithubSearchResultDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
 
