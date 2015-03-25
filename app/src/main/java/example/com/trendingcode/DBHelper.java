@@ -23,14 +23,13 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String ID = "id";
     public static final String NAME = "name";
     public static final String FULL_NAME = "fullName";
-    public static final String URL = "URL";
+    public static final String LANGUAGE = "language";
     public static final String DESCRIPTION = "description";
     public static final String STARTGAZERS = "starGazers";
     public static final String WATCHERS = "watchers";
-    public static final String FORKS = "forks";
 
-    public static final String CREATE_TABLE = "create table " + TABLE_NAME + "(" + ID + "integer primary key" +  NAME + " text," +  FULL_NAME + " text," +  URL + " text,"+
-                                                                                     DESCRIPTION + " text," + STARTGAZERS + " text," + WATCHERS + " text," + FORKS + " text,"+ ")";
+    public static final String CREATE_TABLE = "create table " + TABLE_NAME + "(" + ID + "integer primary key" +  NAME + " text," +  FULL_NAME + " text," +  LANGUAGE + " text,"+
+                                                                                     DESCRIPTION + " text," + STARTGAZERS + " integer," + WATCHERS + " integer" + ")";
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -54,11 +53,10 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(ID, id);
         cv.put(NAME, name);
         cv.put(FULL_NAME, fullName);
-        cv.put(URL, url);
+        cv.put(LANGUAGE, url);
         cv.put(DESCRIPTION, description);
         cv.put(STARTGAZERS, startGazers);
         cv.put(WATCHERS, watchers);
-        cv.put(FORKS, forks);
 
         try{
             db.insert(TABLE_NAME, null, cv);
@@ -69,16 +67,16 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public List<Repositories> getAllRepo(){
+    public List<GithubRepository> getAllRepo(){
         db = this.getReadableDatabase();
 
-        List<Repositories> repos = new ArrayList<>();
+        List<GithubRepository> repos = new ArrayList<>();
 
-        Cursor cursor = db.query(TABLE_NAME, new String[] {ID, NAME, FULL_NAME, URL, DESCRIPTION, STARTGAZERS, WATCHERS, FORKS}, null, null, null, null, null);
+        Cursor cursor = db.query(TABLE_NAME, new String[] {ID, NAME, FULL_NAME, LANGUAGE, DESCRIPTION, STARTGAZERS, WATCHERS}, null, null, null, null, null);
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()){
-            Repositories repo = cursorToRepo(cursor);
+            GithubRepository repo = cursorToRepo(cursor);
             repos.add(repo);
             cursor.moveToNext();
         }
@@ -87,16 +85,16 @@ public class DBHelper extends SQLiteOpenHelper {
         return repos;
     }
 
-    private Repositories cursorToRepo(Cursor cursor){
-        Repositories repo = new Repositories();
-        repo.setId(cursor.getLong(0));
+    private GithubRepository cursorToRepo(Cursor cursor){
+        GithubRepository repo = new GithubRepository();
+
+        repo.setID(cursor.getInt(0));
         repo.setName(cursor.getString(1));
         repo.setFullName(cursor.getString(2));
-        repo.setURL(cursor.getString(3));
+        repo.setLanguage(cursor.getString(3));
         repo.setDescription(cursor.getString(4));
-        repo.setStarGazers(cursor.getString(5));
-        repo.setWatchers(cursor.getString(6));
-        repo.setForks(cursor.getString(7));
+        repo.setStargazersCount(cursor.getInt(5));
+        repo.setWatchersCount(cursor.getInt(6));
 
         return repo;
     }
