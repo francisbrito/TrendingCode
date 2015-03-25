@@ -5,4 +5,23 @@
     <string name="action_settings">Settings</string>
     <string name="resultLbl">Results</string>
     <string name="searchBtn">Search</string>
+    <string-array name="autocompletion_array">
+        <item>order:asc</item>
+        <item>order:desc</item>
+
+        <item>o:asc</item>
+        <item>o:desc</item>
+
+        <item>sort:stars</item>
+        <item>sort:score</item>
+        <item>sort:forks</item>
+
+        <item>s:stars</item>
+        <item>s:score</item>
+        <item>s:forks</item>
+
+        <item>language:</item>
+        <item>lang:</item>
+        <item>l:</item>
+    </string-array>
 </resources>
