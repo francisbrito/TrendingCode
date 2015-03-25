@@ -9,12 +9,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 
 public class MainActivity extends ActionBarActivity {
     EditText searchBox;
     Button searchBtn;
     ListView list;
+    ProgressBar progressBar;
 
     ArrayAdapter<GithubRepository> searchResultAdapter;
 
@@ -31,6 +33,7 @@ public class MainActivity extends ActionBarActivity {
                 R.layout.search_result_item,
                 R.id.search_result_item_text
         );
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
         list.setAdapter(searchResultAdapter);
 
         // Hook-up events.
@@ -44,9 +47,15 @@ public class MainActivity extends ActionBarActivity {
                 GithubRepositorySearchQuery query = GithubRepositorySearchQuery.fromString(searchText);
 
                 searchForRepositories(query);
+
+                showProgressBar();
             }
         });
 
+    }
+
+    private void showProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     private void searchForRepositories(GithubRepositorySearchQuery query) {
@@ -55,10 +64,16 @@ public class MainActivity extends ActionBarActivity {
             protected void onPostExecute(GithubSearchResult result) {
                 searchResultAdapter.clear();
                 searchResultAdapter.addAll(result.getItems());
+
+                hideProgressBar();
             }
         };
 
         task.execute(query);
+    }
+
+    private void hideProgressBar() {
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
 

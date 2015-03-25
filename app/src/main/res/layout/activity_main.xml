@@ -54,5 +54,6 @@
         android:layout_height="wrap_content"
         android:indeterminate="true"
         android:layout_below="@id/resultLbl"
-        android:keepScreenOn="true" />
+        android:keepScreenOn="true"
+        android:visibility="invisible"/>
 </RelativeLayout>
