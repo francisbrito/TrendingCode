@@ -44,14 +44,22 @@ public class MainActivity extends ActionBarActivity {
                         .getText()
                         .toString();
 
-                GithubRepositorySearchQuery query = GithubRepositorySearchQuery.fromString(searchText);
+                if (!isValid(searchText)) {
+                    searchBox.setError("Invalid search query.");
+                } else {
+                    GithubRepositorySearchQuery query = GithubRepositorySearchQuery.fromString(searchText);
 
-                searchForRepositories(query);
+                    searchForRepositories(query);
 
-                showProgressBar();
+                    showProgressBar();
+                }
             }
         });
 
+    }
+
+    private boolean isValid(String searchText) {
+        return !searchText.trim().isEmpty();
     }
 
     private void showProgressBar() {
