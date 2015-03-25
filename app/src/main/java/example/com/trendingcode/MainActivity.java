@@ -11,11 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Filterable;
 import android.widget.ListView;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.ProgressBar;
 
 
 public class MainActivity extends ActionBarActivity {
-    AutoCompleteTextView searchBox;
+    MultiAutoCompleteTextView searchBox;
     Button searchBtn;
     ListView list;
     ProgressBar progressBar;
@@ -27,7 +28,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        searchBox = (AutoCompleteTextView) findViewById(R.id.searchBox);
+        searchBox = (MultiAutoCompleteTextView) findViewById(R.id.searchBox);
         searchBtn = (Button) findViewById(R.id.searchBtn);
         list = (ListView) findViewById(R.id.resultsList);
         searchResultAdapter = new GithubRepositoryArrayAdapter(
@@ -46,6 +47,7 @@ public class MainActivity extends ActionBarActivity {
 
         list.setAdapter(searchResultAdapter);
         searchBox.setAdapter(autoCompletionAdapter);
+        searchBox.setTokenizer(new SpaceTokenizer());
 
         // Hook-up events.
         searchBtn.setOnClickListener(new View.OnClickListener() {
