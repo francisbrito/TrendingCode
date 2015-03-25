@@ -20,6 +20,8 @@ public class GithubRepository {
     private Integer watchers_count;
     private String language;
 
+    public GithubRepository(){}
+
     /**
      * Construct.
      * @param id
