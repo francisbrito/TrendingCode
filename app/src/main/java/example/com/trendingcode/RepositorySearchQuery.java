@@ -1,13 +1,24 @@
 package example.com.trendingcode;
 
+import android.util.Log;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by francis on 03/24/15.
  */
 public class RepositorySearchQuery {
     public static final String QUERY_FIELD = "q";
-    public static final String LANGUAGE_FIELD = "lang";
+    public static final String LANGUAGE_FIELD = "language";
+    public static final String LANGUAGE_SHORT_FIELD = "lang";
+    public static final String LANGUAGE_FIELD_LETTER = "l";
     public static final String SORT_FIELD = "sort";
+    public static final String SORT_FIELD_LETTER = "s";
     public static final String ORDER_FIELD = "order";
+    public static final String ORDER_FIELD_LETTER = "o";
+
+    private static final String TAG = RepositorySearchQuery.class.getSimpleName();
 
     private final String mQuery;
     private final String mLang;
@@ -26,12 +37,42 @@ public class RepositorySearchQuery {
     }
 
     public static RepositorySearchQuery fromString(String queryString) {
-        String fieldsRegex = "(language|sort|order):(\\w+)";
+        Pattern regex = Pattern.compile("((?:l(?:ang(?:uage)?)?|s(?:ort)?|o(?:rder)?):(?:\\w+))");
+        Matcher matcher = regex.matcher(queryString);
 
-        String query = queryString.replaceAll(fieldsRegex, "");
-        String lang = "javascript";
-        String sort = "stars";
+        String query = queryString
+                .replaceAll(regex.toString(), "")
+                .trim();
+
+        String lang = "";
+        String sort = "score";
         String order = "desc";
+
+        while (matcher.find()) {
+            String match = matcher.group();
+
+            String[] parts = match.split(":");
+            String key = parts[0];
+            String value = parts[1];
+
+            Log.d(TAG, "KEY: " + key + " " + "VALUE: " + value);
+
+            switch (key) {
+                case LANGUAGE_FIELD:
+                case LANGUAGE_SHORT_FIELD:
+                case LANGUAGE_FIELD_LETTER:
+                    lang = value;
+                    break;
+                case SORT_FIELD:
+                case SORT_FIELD_LETTER:
+                    sort = value;
+                    break;
+                case ORDER_FIELD:
+                case ORDER_FIELD_LETTER:
+                    order = value;
+                    break;
+            }
+        }
 
         return RepositorySearchQuery.create(query, lang, sort, order);
     }
