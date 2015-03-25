@@ -5,16 +5,20 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.util.Comparator;
+
 
 public class MainActivity extends ActionBarActivity {
-
     EditText searchBox;
     Button searchBtn;
     ListView list;
+
+    ArrayAdapter<GithubRepository> searchResultAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +28,12 @@ public class MainActivity extends ActionBarActivity {
         searchBox = (EditText) findViewById(R.id.searchBox);
         searchBtn = (Button) findViewById(R.id.searchBtn);
         list = (ListView) findViewById(R.id.resultsList);
+        searchResultAdapter = new GithubRepositoryArrayAdapter(
+                this,
+                R.layout.search_result_item,
+                R.id.search_result_item_text
+        );
+        list.setAdapter(searchResultAdapter);
 
         // Hook-up events.
         searchBtn.setOnClickListener(new View.OnClickListener() {
@@ -42,7 +52,13 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void searchForRepositories(RepositorySearchQuery query) {
-        SearchGithubRepositories task = new SearchGithubRepositories();
+        SearchGithubRepositories task = new SearchGithubRepositories() {
+            @Override
+            protected void onPostExecute(GithubSearchResult result) {
+                searchResultAdapter.clear();
+                searchResultAdapter.addAll(result.getItems());
+            }
+        };
 
         task.execute(query);
     }
