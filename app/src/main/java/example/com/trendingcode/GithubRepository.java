@@ -177,6 +177,11 @@ public class GithubRepository {
         return GithubRepository.fromJSON(json);
     }
 
+    @Override
+    public String toString() {
+        return this.full_name;
+    }
+
     public static GithubRepository fromJSON(JSONObject json) throws JSONException {
         Integer id = json.getInt(ID_FIELD);
         String name = json.getString(NAME_FIELD);
