@@ -174,6 +174,15 @@ public class GithubRepository {
     public static GithubRepository fromJSON(String jsonString) throws JSONException {
         JSONObject json = new JSONObject(jsonString);
 
+        return GithubRepository.fromJSON(json);
+    }
+
+    @Override
+    public String toString() {
+        return this.full_name;
+    }
+
+    public static GithubRepository fromJSON(JSONObject json) throws JSONException {
         Integer id = json.getInt(ID_FIELD);
         String name = json.getString(NAME_FIELD);
         String fullName = json.getString(FULL_NAME_FIELD);
@@ -184,4 +193,5 @@ public class GithubRepository {
 
         return new GithubRepository(id, name, fullName, description, stars, watchers, language);
     }
+
 }

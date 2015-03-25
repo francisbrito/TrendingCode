@@ -5,16 +5,20 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 
 public class MainActivity extends ActionBarActivity {
-
     EditText searchBox;
     Button searchBtn;
     ListView list;
+    ProgressBar progressBar;
+
+    ArrayAdapter<GithubRepository> searchResultAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +28,13 @@ public class MainActivity extends ActionBarActivity {
         searchBox = (EditText) findViewById(R.id.searchBox);
         searchBtn = (Button) findViewById(R.id.searchBtn);
         list = (ListView) findViewById(R.id.resultsList);
+        searchResultAdapter = new GithubRepositoryArrayAdapter(
+                this,
+                R.layout.search_result_item,
+                R.id.search_result_item_text
+        );
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        list.setAdapter(searchResultAdapter);
 
         // Hook-up events.
         searchBtn.setOnClickListener(new View.OnClickListener() {
@@ -33,18 +44,44 @@ public class MainActivity extends ActionBarActivity {
                         .getText()
                         .toString();
 
-                RepositorySearchQuery query = RepositorySearchQuery.fromString(searchText);
+                if (!isValid(searchText)) {
+                    searchBox.setError("Invalid search query.");
+                } else {
+                    GithubRepositorySearchQuery query = GithubRepositorySearchQuery.fromString(searchText);
 
-                searchForRepositories(query);
+                    searchForRepositories(query);
+
+                    showProgressBar();
+                }
             }
         });
 
     }
 
-    private void searchForRepositories(RepositorySearchQuery query) {
-        SearchGithubRepositories task = new SearchGithubRepositories();
+    private boolean isValid(String searchText) {
+        return !searchText.trim().isEmpty();
+    }
+
+    private void showProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void searchForRepositories(GithubRepositorySearchQuery query) {
+        SearchGithubRepositories task = new SearchGithubRepositories() {
+            @Override
+            protected void onPostExecute(GithubSearchResult result) {
+                searchResultAdapter.clear();
+                searchResultAdapter.addAll(result.getItems());
+
+                hideProgressBar();
+            }
+        };
 
         task.execute(query);
+    }
+
+    private void hideProgressBar() {
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
 
