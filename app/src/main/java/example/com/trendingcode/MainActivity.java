@@ -6,14 +6,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filterable;
 import android.widget.ListView;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.ProgressBar;
 
 
 public class MainActivity extends ActionBarActivity {
-    EditText searchBox;
+    MultiAutoCompleteTextView searchBox;
     Button searchBtn;
     ListView list;
     ProgressBar progressBar;
@@ -25,7 +28,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        searchBox = (EditText) findViewById(R.id.searchBox);
+        searchBox = (MultiAutoCompleteTextView) findViewById(R.id.searchBox);
         searchBtn = (Button) findViewById(R.id.searchBtn);
         list = (ListView) findViewById(R.id.resultsList);
         searchResultAdapter = new GithubRepositoryArrayAdapter(
@@ -34,7 +37,17 @@ public class MainActivity extends ActionBarActivity {
                 R.id.search_result_item_text
         );
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        String[] autoCompletionArray = getResources()
+                .getStringArray(R.array.autocompletion_array);
+        ArrayAdapter<String> autoCompletionAdapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_list_item_1,
+                autoCompletionArray
+        );
+
         list.setAdapter(searchResultAdapter);
+        searchBox.setAdapter(autoCompletionAdapter);
+        searchBox.setTokenizer(new SpaceTokenizer());
 
         // Hook-up events.
         searchBtn.setOnClickListener(new View.OnClickListener() {

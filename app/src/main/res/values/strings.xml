@@ -5,4 +5,97 @@
     <string name="action_settings">Settings</string>
     <string name="resultLbl">Results</string>
     <string name="searchBtn">Search</string>
+    <string-array name="autocompletion_array">
+        <item>order:asc</item>
+        <item>order:desc</item>
+
+        <item>o:asc</item>
+        <item>o:desc</item>
+
+        <item>sort:stars</item>
+        <item>sort:score</item>
+        <item>sort:forks</item>
+
+        <item>s:stars</item>
+        <item>s:score</item>
+        <item>s:forks</item>
+
+        <item>language:actionscript</item>
+        <item>language:c</item>
+        <item>language:csharp</item>
+        <item>language:cpp</item>
+        <item>language:clojure</item>
+        <item>language:coffeescript</item>
+        <item>language:css</item>
+        <item>language:go</item>
+        <item>language:haskell</item>
+        <item>language:html</item>
+        <item>language:java</item>
+        <item>language:javascript</item>
+        <item>language:lua</item>
+        <item>language:matlab</item>
+        <item>language:objective-c</item>
+        <item>language:perl</item>
+        <item>language:php</item>
+        <item>language:python</item>
+        <item>language:r</item>
+        <item>language:ruby</item>
+        <item>language:scala</item>
+        <item>language:shell</item>
+        <item>language:swift</item>
+        <item>language:tex</item>
+        <item>language:viml</item>
+
+        <item>lang:actionscript</item>
+        <item>lang:c</item>
+        <item>lang:csharp</item>
+        <item>lang:cpp</item>
+        <item>lang:clojure</item>
+        <item>lang:coffeescript</item>
+        <item>lang:css</item>
+        <item>lang:go</item>
+        <item>lang:haskell</item>
+        <item>lang:html</item>
+        <item>lang:java</item>
+        <item>lang:javascript</item>
+        <item>lang:lua</item>
+        <item>lang:matlab</item>
+        <item>lang:objective-c</item>
+        <item>lang:perl</item>
+        <item>lang:php</item>
+        <item>lang:python</item>
+        <item>lang:r</item>
+        <item>lang:ruby</item>
+        <item>lang:scala</item>
+        <item>lang:shell</item>
+        <item>lang:swift</item>
+        <item>lang:tex</item>
+        <item>lang:viml</item>
+
+        <item>l:actionscript</item>
+        <item>l:c</item>
+        <item>l:csharp</item>
+        <item>l:cpp</item>
+        <item>l:clojure</item>
+        <item>l:coffeescript</item>
+        <item>l:css</item>
+        <item>l:go</item>
+        <item>l:haskell</item>
+        <item>l:html</item>
+        <item>l:java</item>
+        <item>l:javascript</item>
+        <item>l:lua</item>
+        <item>l:matlab</item>
+        <item>l:objective-c</item>
+        <item>l:perl</item>
+        <item>l:php</item>
+        <item>l:python</item>
+        <item>l:r</item>
+        <item>l:ruby</item>
+        <item>l:scala</item>
+        <item>l:shell</item>
+        <item>l:swift</item>
+        <item>l:tex</item>
+        <item>l:viml</item>
+    </string-array>
 </resources>

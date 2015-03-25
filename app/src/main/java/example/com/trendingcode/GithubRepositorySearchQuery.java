@@ -92,4 +92,8 @@ public class GithubRepositorySearchQuery {
     public String getOrder() {
         return mOrder;
     }
+
+    public String buildQuery() {
+        return String.format("%s+%s:%s", mQuery, LANGUAGE_FIELD, mLang);
+    }
 }
