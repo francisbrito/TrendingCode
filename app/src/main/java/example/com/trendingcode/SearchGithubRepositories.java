@@ -18,6 +18,8 @@ public class SearchGithubRepositories
     private static final String TAG = SearchGithubRepositories.class.getSimpleName();
     private static final String GITHUB_REPOSITORY_SEARCH_API_ENDPOINT
             = "https://api.github.com/search/repositories";
+    private static final String GITHUB_RATE_LIMIT_HEADER = "X-RateLimit-Limit";
+    private static final String GITHUB_RATE_LIMIT_REMAINING_HEADER = "X-RateLimit-Remaining";
 
     @Override
     protected GithubSearchResult doInBackground(GithubRepositorySearchQuery... queries) {
@@ -46,6 +48,11 @@ public class SearchGithubRepositories
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.connect();
+
+            String rateRemaining = connection.getHeaderField(GITHUB_RATE_LIMIT_REMAINING_HEADER);
+            String rateLimit = connection.getHeaderField(GITHUB_RATE_LIMIT_HEADER);
+
+            Log.d(TAG, "Rate Limit: " + rateRemaining + "/" + rateLimit);
 
             InputStream inputStream = connection.getInputStream();
             StringBuffer stringBuffer = new StringBuffer();
