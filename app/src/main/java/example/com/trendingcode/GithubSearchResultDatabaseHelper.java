@@ -13,6 +13,7 @@ import java.util.List;
  * Created by dripoll24 on 3/25/2015.
  */
 public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
+    private static final int DATABASE_VERSION = 1;
 
     SQLiteDatabase db;
 
@@ -28,8 +29,8 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
     public static final String STARTGAZERS = "starGazers";
     public static final String WATCHERS = "watchers";
 
-    public static final String CREATE_TABLE = "create table " + TABLE_NAME + "(" + ID + "integer primary key" +  NAME + " text," +  FULL_NAME + " text," +  LANGUAGE + " text,"+
-                                                                                     DESCRIPTION + " text," + STARTGAZERS + " integer," + WATCHERS + " integer" + ")";
+    public static final String CREATE_TABLE = "create table " + TABLE_NAME + "( " + ID + " integer primary key, " +  NAME + " text, " +  FULL_NAME + " text, " +  LANGUAGE + " text, "+
+                                                                                     DESCRIPTION + " text, " + STARTGAZERS + " integer, " + WATCHERS + " integer " + ")";
 
     public GithubSearchResultDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -97,5 +98,9 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
         repo.setWatchersCount(cursor.getInt(6));
 
         return repo;
+    }
+
+    public void clearRepositories() {
+        onUpgrade(db, DATABASE_VERSION, DATABASE_VERSION);
     }
 }
