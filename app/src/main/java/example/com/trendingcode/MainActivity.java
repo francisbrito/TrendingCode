@@ -14,6 +14,8 @@ import android.widget.ListView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.ProgressBar;
 
+import java.util.ArrayList;
+
 
 public class MainActivity extends ActionBarActivity {
     MultiAutoCompleteTextView searchBox;
@@ -22,6 +24,8 @@ public class MainActivity extends ActionBarActivity {
     ProgressBar progressBar;
 
     ArrayAdapter<GithubRepository> searchResultAdapter;
+
+    GithubSearchResultDatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,9 @@ public class MainActivity extends ActionBarActivity {
                 android.R.layout.simple_list_item_1,
                 autoCompletionArray
         );
+        dbHelper = new GithubSearchResultDatabaseHelper(this);
+
+        loadFromCacheIfAvailable(dbHelper, searchResultAdapter);
 
         list.setAdapter(searchResultAdapter);
         searchBox.setAdapter(autoCompletionAdapter);
@@ -71,6 +78,17 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
+    private void loadFromCacheIfAvailable(GithubSearchResultDatabaseHelper dbHelper,
+                                          ArrayAdapter<GithubRepository> adapter) {
+        ArrayList<GithubRepository> cachedRepos = (ArrayList<GithubRepository>) dbHelper.getAllRepo();
+
+        if (cachedRepos.size() > 0) {
+            // Display cached values...
+            adapter.addAll(cachedRepos);
+        }
+
+    }
+
     private boolean isValid(String searchText) {
         return !searchText.trim().isEmpty();
     }
@@ -87,10 +105,35 @@ public class MainActivity extends ActionBarActivity {
                 searchResultAdapter.addAll(result.getItems());
 
                 hideProgressBar();
+                updateCache(dbHelper, result.getItems());
             }
         };
 
         task.execute(query);
+    }
+
+    private void updateCache(GithubSearchResultDatabaseHelper dbHelper,
+                             ArrayList<GithubRepository> repositories) {
+
+        dbHelper.clearRepositories();
+
+        for (int i = 0; i < repositories.size(); i++) {
+            GithubRepository repository = repositories.get(i);
+
+            Integer id = repository.getID();
+            String name = repository.getName();
+            String fullName = repository.getFullName();
+            // TODO-francisbrito: Add this field.
+            String url = "";
+            String description = repository.getDescription();
+            Integer stars = repository.getStargazersCount();
+            Integer watchers = repository.getWatchersCount();
+            // TODO-francisbrito: Add this field.
+            Integer forks = 0;
+            // TODO-francisbrito: Fix #toString calls.
+            dbHelper.insertRepo(id, name, fullName, url, description,
+                    stars.toString(), watchers.toString(), forks.toString());
+        }
     }
 
     private void hideProgressBar() {
