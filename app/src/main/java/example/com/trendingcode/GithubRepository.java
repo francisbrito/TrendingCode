@@ -171,8 +171,7 @@ public class GithubRepository {
         this.language = val;
     }
 
-    public static GithubRepository fromJSON(String jsonString) throws JSONException {
-        JSONObject json = new JSONObject(jsonString);
+    public static GithubRepository fromJSON(JSONObject json) throws JSONException {
 
         Integer id = json.getInt(ID_FIELD);
         String name = json.getString(NAME_FIELD);

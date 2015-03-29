@@ -67,6 +67,7 @@ public class SearchGithubRepositories
             Log.d(TAG, "JSON: " + jsonStr);
 
             result = GithubSearchResult.fromJSON(jsonStr);
+
         } catch (Exception e) {
             Log.e(TAG, "Error while executing task.", e);
         }
