@@ -20,6 +20,8 @@ public class GithubRepository {
     private Integer watchers_count;
     private String language;
 
+    public GithubRepository(){}
+
     /**
      * Construct.
      * @param id
@@ -171,8 +173,7 @@ public class GithubRepository {
         this.language = val;
     }
 
-    public static GithubRepository fromJSON(String jsonString) throws JSONException {
-        JSONObject json = new JSONObject(jsonString);
+    public static GithubRepository fromJSON(JSONObject json) throws JSONException {
 
         return GithubRepository.fromJSON(json);
     }
