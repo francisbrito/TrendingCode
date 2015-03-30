@@ -76,6 +76,15 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+
+        if (!db.isReadOnly()) {
+            db.execSQL("PRAGMA foreign_keys=ON");
+        }
+    }
+
     public boolean insertRepo(Integer id, String name, String fullName, String url, String description, String startGazers, String watchers, String forks){
         db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
