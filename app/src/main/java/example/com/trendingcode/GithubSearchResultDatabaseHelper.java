@@ -42,6 +42,19 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_REPOSITORY_WATCHERS + " integer " +
                 ")";
 
+    private static final String COMMENT_TABLE_NAME = "comment";
+
+    private static final String COLUMN_COMMENT_ID = "id";
+    private static final String COLUMN_COMMENT_BODY = "body";
+
+    public static final String CREATE_COMMENT_TABLE =
+            "CREATE TABLE " +
+                COMMENT_TABLE_NAME +
+                "( " +
+                    COLUMN_COMMENT_ID + " integer primary key, " +
+                    COLUMN_COMMENT_BODY + " text" +
+                ")";
+
     public GithubSearchResultDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -49,11 +62,14 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_REPOSITORY_TABLE);
+        db.execSQL(CREATE_COMMENT_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + REPOSITORY_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + COMMENT_TABLE_NAME);
+        
         onCreate(db);
     }
 
