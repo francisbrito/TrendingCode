@@ -141,4 +141,15 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
     public void clearRepositories() {
         onUpgrade(db, DATABASE_VERSION, DATABASE_VERSION);
     }
+
+    public void insertComment(int repositoryId, String body) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_COMMENT_FOREIGN_KEY_REPOSITORY_ID, repositoryId);
+        values.put(COLUMN_COMMENT_BODY, body);
+
+        db.insert(COMMENT_TABLE_NAME, null, values);
+    }
 }
