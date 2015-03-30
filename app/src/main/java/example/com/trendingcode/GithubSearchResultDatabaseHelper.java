@@ -19,18 +19,18 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "TrendingCode.db";
 
-    public static final String TABLE_NAME = "repositories";
+    public static final String REPOSITORY_TABLE_NAME = "repositories";
 
-    public static final String ID = "id";
-    public static final String NAME = "name";
-    public static final String FULL_NAME = "fullName";
-    public static final String LANGUAGE = "language";
-    public static final String DESCRIPTION = "description";
-    public static final String STARTGAZERS = "starGazers";
-    public static final String WATCHERS = "watchers";
+    public static final String COLUMN_REPOSITORY_ID = "id";
+    public static final String COLUMN_REPOSITORY_NAME = "name";
+    public static final String COLUMN_REPOSITORY_FULL_NAME = "fullName";
+    public static final String COLUMN_REPOSITORY_LANGUAGE = "language";
+    public static final String COLUMN_REPOSITORY_DESCRIPTION = "description";
+    public static final String COLUMN_REPOSITORY_STARS = "starGazers";
+    public static final String COLUMN_REPOSITORY_WATCHERS = "watchers";
 
-    public static final String CREATE_TABLE = "create table " + TABLE_NAME + "( " + ID + " integer primary key, " +  NAME + " text, " +  FULL_NAME + " text, " +  LANGUAGE + " text, "+
-                                                                                     DESCRIPTION + " text, " + STARTGAZERS + " integer, " + WATCHERS + " integer " + ")";
+    public static final String CREATE_REPOSITORY_TABLE = "create table " + REPOSITORY_TABLE_NAME + "( " + COLUMN_REPOSITORY_ID + " integer primary key, " + COLUMN_REPOSITORY_NAME + " text, " + COLUMN_REPOSITORY_FULL_NAME + " text, " + COLUMN_REPOSITORY_LANGUAGE + " text, "+
+            COLUMN_REPOSITORY_DESCRIPTION + " text, " + COLUMN_REPOSITORY_STARS + " integer, " + COLUMN_REPOSITORY_WATCHERS + " integer " + ")";
 
     public GithubSearchResultDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -38,12 +38,12 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_TABLE);
+        db.execSQL(CREATE_REPOSITORY_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + REPOSITORY_TABLE_NAME);
         onCreate(db);
     }
 
@@ -51,16 +51,16 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
         db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        cv.put(ID, id);
-        cv.put(NAME, name);
-        cv.put(FULL_NAME, fullName);
-        cv.put(LANGUAGE, url);
-        cv.put(DESCRIPTION, description);
-        cv.put(STARTGAZERS, startGazers);
-        cv.put(WATCHERS, watchers);
+        cv.put(COLUMN_REPOSITORY_ID, id);
+        cv.put(COLUMN_REPOSITORY_NAME, name);
+        cv.put(COLUMN_REPOSITORY_FULL_NAME, fullName);
+        cv.put(COLUMN_REPOSITORY_LANGUAGE, url);
+        cv.put(COLUMN_REPOSITORY_DESCRIPTION, description);
+        cv.put(COLUMN_REPOSITORY_STARS, startGazers);
+        cv.put(COLUMN_REPOSITORY_WATCHERS, watchers);
 
         try{
-            db.insert(TABLE_NAME, null, cv);
+            db.insert(REPOSITORY_TABLE_NAME, null, cv);
             return true;
         }
         catch (Exception e){
@@ -73,7 +73,7 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
 
         List<GithubRepository> repos = new ArrayList<>();
 
-        Cursor cursor = db.query(TABLE_NAME, new String[] {ID, NAME, FULL_NAME, LANGUAGE, DESCRIPTION, STARTGAZERS, WATCHERS}, null, null, null, null, null);
+        Cursor cursor = db.query(REPOSITORY_TABLE_NAME, new String[] {COLUMN_REPOSITORY_ID, COLUMN_REPOSITORY_NAME, COLUMN_REPOSITORY_FULL_NAME, COLUMN_REPOSITORY_LANGUAGE, COLUMN_REPOSITORY_DESCRIPTION, COLUMN_REPOSITORY_STARS, COLUMN_REPOSITORY_WATCHERS}, null, null, null, null, null);
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()){
