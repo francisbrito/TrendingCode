@@ -43,7 +43,7 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
                 ")";
 
     public GithubSearchResultDatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, 1);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
