@@ -46,6 +46,7 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String COLUMN_COMMENT_ID = "id";
     private static final String COLUMN_COMMENT_BODY = "body";
+    private static final String COLUMN_COMMENT_FOREIGN_KEY_REPOSITORY_ID = "repository_id";
 
     public static final String CREATE_COMMENT_TABLE =
             "CREATE TABLE " +
@@ -53,6 +54,8 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
                 "( " +
                     COLUMN_COMMENT_ID + " integer primary key, " +
                     COLUMN_COMMENT_BODY + " text" +
+                    "FOREIGN KEY( " + COLUMN_COMMENT_FOREIGN_KEY_REPOSITORY_ID + " )" +
+                    "REFERENCES ( " + COLUMN_REPOSITORY_ID  + " )" +
                 ")";
 
     public GithubSearchResultDatabaseHelper(Context context) {
@@ -69,7 +72,7 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + REPOSITORY_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + COMMENT_TABLE_NAME);
-        
+
         onCreate(db);
     }
 
