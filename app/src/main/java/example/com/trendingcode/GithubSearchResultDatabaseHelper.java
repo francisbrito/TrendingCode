@@ -13,7 +13,7 @@ import java.util.List;
  * Created by dripoll24 on 3/25/2015.
  */
 public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     SQLiteDatabase db;
 
