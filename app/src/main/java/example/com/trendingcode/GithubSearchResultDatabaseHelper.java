@@ -17,16 +17,16 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
 
     SQLiteDatabase db;
 
-    public static final String DATABASE_NAME = "TrendingCode.db";
+    public static final String DATABASE_NAME = "trending_code.db";
 
-    public static final String REPOSITORY_TABLE_NAME = "repositories";
+    public static final String REPOSITORY_TABLE_NAME = "repository";
 
     public static final String COLUMN_REPOSITORY_ID = "id";
     public static final String COLUMN_REPOSITORY_NAME = "name";
-    public static final String COLUMN_REPOSITORY_FULL_NAME = "fullName";
+    public static final String COLUMN_REPOSITORY_FULL_NAME = "full_name";
     public static final String COLUMN_REPOSITORY_LANGUAGE = "language";
     public static final String COLUMN_REPOSITORY_DESCRIPTION = "description";
-    public static final String COLUMN_REPOSITORY_STARS = "starGazers";
+    public static final String COLUMN_REPOSITORY_STARS = "stars";
     public static final String COLUMN_REPOSITORY_WATCHERS = "watchers";
 
     public static final String CREATE_REPOSITORY_TABLE = "create table " + REPOSITORY_TABLE_NAME + "( " + COLUMN_REPOSITORY_ID + " integer primary key, " + COLUMN_REPOSITORY_NAME + " text, " + COLUMN_REPOSITORY_FULL_NAME + " text, " + COLUMN_REPOSITORY_LANGUAGE + " text, "+
