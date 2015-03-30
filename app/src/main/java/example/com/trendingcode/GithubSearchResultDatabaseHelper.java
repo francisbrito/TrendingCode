@@ -54,6 +54,7 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
                 "( " +
                     COLUMN_COMMENT_ID + " integer primary key, " +
                     COLUMN_COMMENT_BODY + " text, " +
+                    COLUMN_COMMENT_FOREIGN_KEY_REPOSITORY_ID + " integer, " +
                     "FOREIGN KEY(" + COLUMN_COMMENT_FOREIGN_KEY_REPOSITORY_ID + ") " +
                     "REFERENCES " + REPOSITORY_TABLE_NAME + "(" + COLUMN_REPOSITORY_ID  + ")" +
                 ")";
