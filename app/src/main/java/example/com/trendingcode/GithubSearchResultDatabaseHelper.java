@@ -29,8 +29,18 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_REPOSITORY_STARS = "stars";
     public static final String COLUMN_REPOSITORY_WATCHERS = "watchers";
 
-    public static final String CREATE_REPOSITORY_TABLE = "create table " + REPOSITORY_TABLE_NAME + "( " + COLUMN_REPOSITORY_ID + " integer primary key, " + COLUMN_REPOSITORY_NAME + " text, " + COLUMN_REPOSITORY_FULL_NAME + " text, " + COLUMN_REPOSITORY_LANGUAGE + " text, "+
-            COLUMN_REPOSITORY_DESCRIPTION + " text, " + COLUMN_REPOSITORY_STARS + " integer, " + COLUMN_REPOSITORY_WATCHERS + " integer " + ")";
+    public static final String CREATE_REPOSITORY_TABLE =
+            "CREATE TABLE " +
+                REPOSITORY_TABLE_NAME +
+                "( " +
+                    COLUMN_REPOSITORY_ID + " integer primary key, " +
+                    COLUMN_REPOSITORY_NAME + " text, " +
+                    COLUMN_REPOSITORY_FULL_NAME + " text, " +
+                    COLUMN_REPOSITORY_LANGUAGE + " text, "+
+                    COLUMN_REPOSITORY_DESCRIPTION + " text, " +
+                    COLUMN_REPOSITORY_STARS + " integer, " +
+                    COLUMN_REPOSITORY_WATCHERS + " integer " +
+                ")";
 
     public GithubSearchResultDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
