@@ -29,7 +29,8 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_REPOSITORY_STARS = "stars";
     public static final String COLUMN_REPOSITORY_WATCHERS = "watchers";
 	
-	public static final String[] ALL_COLUMNS = new String[] {ID, NAME, FULL_NAME, LANGUAGE, DESCRIPTION, STARTGAZERS, WATCHERS};
+	public static final String[] ALL_COLUMNS_REPOSITORY = new String[] {COLUMN_REPOSITORY_ID, COLUMN_REPOSITORY_NAME, COLUMN_REPOSITORY_FULL_NAME, COLUMN_REPOSITORY_LANGUAGE,
+                                                                                    COLUMN_REPOSITORY_DESCRIPTION, COLUMN_REPOSITORY_STARS, COLUMN_REPOSITORY_WATCHERS};
 	
     public static final String CREATE_REPOSITORY_TABLE =
             "CREATE TABLE " +
@@ -114,7 +115,7 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
 
         List<GithubRepository> repos = new ArrayList<>();
 
-        Cursor cursor = db.query(REPOSITORY_TABLE_NAME, ALL_COLUMNS, null, null, null, null, null);
+        Cursor cursor = db.query(REPOSITORY_TABLE_NAME, ALL_COLUMNS_REPOSITORY, null, null, null, null, null);
 
         cursor.moveToFirst();
 
@@ -147,8 +148,8 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public GithubRepository getRepo(GithubRepository repo){
-        String select = "SELECT * FROM " + TABLE_NAME + " WHERE " + ID + " = " + repo.getID();
-        Cursor c = db.query(TABLE_NAME, ALL_COLUMNS, select, null, null, null, null);
+        String select = "SELECT * FROM " + REPOSITORY_TABLE_NAME + " WHERE " + COLUMN_REPOSITORY_ID + " = " + repo.getID();
+        Cursor c = db.query(REPOSITORY_TABLE_NAME, ALL_COLUMNS_REPOSITORY, select, null, null, null, null);
         return cursorToRepo(c);
 	}
 	
