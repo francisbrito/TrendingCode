@@ -168,6 +168,10 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+        else if (id == R.id.action_exit) {
+            finish();
+            System.exit(0);
+        }
 
         return super.onOptionsItemSelected(item);
     }

@@ -13,55 +13,95 @@ import java.util.List;
  * Created by dripoll24 on 3/25/2015.
  */
 public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     SQLiteDatabase db;
 
-    public static final String DATABASE_NAME = "TrendingCode.db";
+    public static final String DATABASE_NAME = "trending_code.db";
 
-    public static final String TABLE_NAME = "repositories";
+    public static final String REPOSITORY_TABLE_NAME = "repository";
 
-    public static final String ID = "id";
-    public static final String NAME = "name";
-    public static final String FULL_NAME = "fullName";
-    public static final String LANGUAGE = "language";
-    public static final String DESCRIPTION = "description";
-    public static final String STARTGAZERS = "starGazers";
-    public static final String WATCHERS = "watchers";
-    public static final String[] ALL_COLUMNS = new String[] {ID, NAME, FULL_NAME, LANGUAGE, DESCRIPTION, STARTGAZERS, WATCHERS};
+    public static final String COLUMN_REPOSITORY_ID = "id";
+    public static final String COLUMN_REPOSITORY_NAME = "name";
+    public static final String COLUMN_REPOSITORY_FULL_NAME = "full_name";
+    public static final String COLUMN_REPOSITORY_LANGUAGE = "language";
+    public static final String COLUMN_REPOSITORY_DESCRIPTION = "description";
+    public static final String COLUMN_REPOSITORY_STARS = "stars";
+    public static final String COLUMN_REPOSITORY_WATCHERS = "watchers";
+	
+	public static final String[] ALL_COLUMNS = new String[] {ID, NAME, FULL_NAME, LANGUAGE, DESCRIPTION, STARTGAZERS, WATCHERS};
+	
+    public static final String CREATE_REPOSITORY_TABLE =
+            "CREATE TABLE " +
+                REPOSITORY_TABLE_NAME +
+                "( " +
+                    COLUMN_REPOSITORY_ID + " integer primary key, " +
+                    COLUMN_REPOSITORY_NAME + " text, " +
+                    COLUMN_REPOSITORY_FULL_NAME + " text, " +
+                    COLUMN_REPOSITORY_LANGUAGE + " text, "+
+                    COLUMN_REPOSITORY_DESCRIPTION + " text, " +
+                    COLUMN_REPOSITORY_STARS + " integer, " +
+                    COLUMN_REPOSITORY_WATCHERS + " integer " +
+                ")";
 
-    public static final String CREATE_TABLE = "create table " + TABLE_NAME + "( " + ID + " integer primary key, " +  NAME + " text, " +  FULL_NAME + " text, " +  LANGUAGE + " text, "+
-                                                                                     DESCRIPTION + " text, " + STARTGAZERS + " integer, " + WATCHERS + " integer " + ")";
+    private static final String COMMENT_TABLE_NAME = "comment";
+
+    private static final String COLUMN_COMMENT_ID = "id";
+    private static final String COLUMN_COMMENT_BODY = "body";
+    private static final String COLUMN_COMMENT_FOREIGN_KEY_REPOSITORY_ID = "repository_id";
+
+    public static final String CREATE_COMMENT_TABLE =
+            "CREATE TABLE " +
+                COMMENT_TABLE_NAME +
+                "( " +
+                    COLUMN_COMMENT_ID + " integer primary key, " +
+                    COLUMN_COMMENT_BODY + " text, " +
+                    COLUMN_COMMENT_FOREIGN_KEY_REPOSITORY_ID + " integer, " +
+                    "FOREIGN KEY(" + COLUMN_COMMENT_FOREIGN_KEY_REPOSITORY_ID + ") " +
+                    "REFERENCES " + REPOSITORY_TABLE_NAME + "(" + COLUMN_REPOSITORY_ID  + ")" +
+                ")";
 
     public GithubSearchResultDatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, 1);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_TABLE);
+        db.execSQL(CREATE_REPOSITORY_TABLE);
+        db.execSQL(CREATE_COMMENT_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + REPOSITORY_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + COMMENT_TABLE_NAME);
+
         onCreate(db);
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+
+        if (!db.isReadOnly()) {
+            db.execSQL("PRAGMA foreign_keys=ON");
+        }
     }
 
     public boolean insertRepo(Integer id, String name, String fullName, String url, String description, String startGazers, String watchers, String forks){
         db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        cv.put(ID, id);
-        cv.put(NAME, name);
-        cv.put(FULL_NAME, fullName);
-        cv.put(LANGUAGE, url);
-        cv.put(DESCRIPTION, description);
-        cv.put(STARTGAZERS, startGazers);
-        cv.put(WATCHERS, watchers);
+        cv.put(COLUMN_REPOSITORY_ID, id);
+        cv.put(COLUMN_REPOSITORY_NAME, name);
+        cv.put(COLUMN_REPOSITORY_FULL_NAME, fullName);
+        cv.put(COLUMN_REPOSITORY_LANGUAGE, url);
+        cv.put(COLUMN_REPOSITORY_DESCRIPTION, description);
+        cv.put(COLUMN_REPOSITORY_STARS, startGazers);
+        cv.put(COLUMN_REPOSITORY_WATCHERS, watchers);
 
         try{
-            db.insert(TABLE_NAME, null, cv);
+            db.insert(REPOSITORY_TABLE_NAME, null, cv);
             return true;
         }
         catch (Exception e){
@@ -74,7 +114,8 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
 
         List<GithubRepository> repos = new ArrayList<>();
 
-        Cursor cursor = db.query(TABLE_NAME, ALL_COLUMNS, null, null, null, null, null);
+        Cursor cursor = db.query(REPOSITORY_TABLE_NAME, ALL_COLUMNS, null, null, null, null, null);
+
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()){
@@ -109,5 +150,16 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
         String select = "SELECT * FROM " + TABLE_NAME + " WHERE " + ID + " = " + repo.getID();
         Cursor c = db.query(TABLE_NAME, ALL_COLUMNS, select, null, null, null, null);
         return cursorToRepo(c);
+	}
+	
+    public void insertComment(int repositoryId, String body) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_COMMENT_FOREIGN_KEY_REPOSITORY_ID, repositoryId);
+        values.put(COLUMN_COMMENT_BODY, body);
+
+        db.insert(COMMENT_TABLE_NAME, null, values);
     }
 }
