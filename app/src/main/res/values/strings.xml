@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">TrendingCode</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="resultLbl">Results</string>
     <string name="searchBtn">Search</string>
+
     <string-array name="autocompletion_array">
         <item>order:asc</item>
         <item>order:desc</item>
@@ -98,4 +98,7 @@
         <item>l:tex</item>
         <item>l:viml</item>
     </string-array>
+
+    <string name="title_activity_repository_description">Repository Details</string>
+
 </resources>
