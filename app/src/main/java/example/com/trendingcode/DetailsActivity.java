@@ -1,10 +1,9 @@
 package example.com.trendingcode;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -29,7 +28,7 @@ public class DetailsActivity extends ActionBarActivity {
             name.setText(repo.getName());
             fullName.setText(repo.getFullName());
             description.setText(repo.getDescription());
-            stars.setText(repo.getStargazersCount());
+            stars.setText(repo.getStargazersCount().toString());
             watchers.setText(repo.getWatchersCount().toString());
             language.setText(repo.getWatchersCount().toString());
         }catch (Exception e){
