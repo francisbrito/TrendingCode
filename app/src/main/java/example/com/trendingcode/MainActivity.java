@@ -1,15 +1,14 @@
 package example.com.trendingcode;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Filterable;
 import android.widget.ListView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.ProgressBar;
@@ -18,6 +17,7 @@ import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity {
+    public static final String REPO = "repo";
     MultiAutoCompleteTextView searchBox;
     Button searchBtn;
     ListView list;
@@ -76,6 +76,15 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+                GithubRepository repo = searchResultAdapter.getItem(position);
+                intent.putExtra(REPO, repo);
+                startActivity(intent);
+            }
+        });
     }
 
     private void loadFromCacheIfAvailable(GithubSearchResultDatabaseHelper dbHelper,
