@@ -28,6 +28,7 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
     public static final String DESCRIPTION = "description";
     public static final String STARTGAZERS = "starGazers";
     public static final String WATCHERS = "watchers";
+    public static final String[] ALL_COLUMNS = new String[] {ID, NAME, FULL_NAME, LANGUAGE, DESCRIPTION, STARTGAZERS, WATCHERS};
 
     public static final String CREATE_TABLE = "create table " + TABLE_NAME + "( " + ID + " integer primary key, " +  NAME + " text, " +  FULL_NAME + " text, " +  LANGUAGE + " text, "+
                                                                                      DESCRIPTION + " text, " + STARTGAZERS + " integer, " + WATCHERS + " integer " + ")";
@@ -73,7 +74,7 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
 
         List<GithubRepository> repos = new ArrayList<>();
 
-        Cursor cursor = db.query(TABLE_NAME, new String[] {ID, NAME, FULL_NAME, LANGUAGE, DESCRIPTION, STARTGAZERS, WATCHERS}, null, null, null, null, null);
+        Cursor cursor = db.query(TABLE_NAME, ALL_COLUMNS, null, null, null, null, null);
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()){
@@ -102,5 +103,11 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
 
     public void clearRepositories() {
         onUpgrade(db, DATABASE_VERSION, DATABASE_VERSION);
+    }
+
+    public GithubRepository getRepo(GithubRepository repo){
+        String select = "SELECT * FROM " + TABLE_NAME + " WHERE " + ID + " = " + repo.getID();
+        Cursor c = db.query(TABLE_NAME, ALL_COLUMNS, select, null, null, null, null);
+        return cursorToRepo(c);
     }
 }
