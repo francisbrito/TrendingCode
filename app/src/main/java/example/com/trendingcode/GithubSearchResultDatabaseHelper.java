@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import org.w3c.dom.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +52,9 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_COMMENT_ID = "id";
     private static final String COLUMN_COMMENT_BODY = "body";
     private static final String COLUMN_COMMENT_FOREIGN_KEY_REPOSITORY_ID = "repository_id";
+
+    public static final String[] ALL_COLUMNS_COMMENT = new String[] {COLUMN_COMMENT_ID, COLUMN_COMMENT_BODY, COLUMN_COMMENT_FOREIGN_KEY_REPOSITORY_ID};
+
 
     public static final String CREATE_COMMENT_TABLE =
             "CREATE TABLE " +
@@ -152,7 +157,9 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
         Cursor c = db.query(REPOSITORY_TABLE_NAME, ALL_COLUMNS_REPOSITORY, select, null, null, null, null);
         return cursorToRepo(c);
 	}
-	
+
+
+
     public void insertComment(int repositoryId, String body) {
         SQLiteDatabase db = getWritableDatabase();
 
@@ -162,5 +169,38 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_COMMENT_BODY, body);
 
         db.insert(COMMENT_TABLE_NAME, null, values);
+    }
+
+    public List<Comment> getAllComments(){
+        List<Comment> comments = new ArrayList<>();
+
+        Cursor cursor = db.query(COMMENT_TABLE_NAME, ALL_COLUMNS_COMMENT, null, null, null, null, null);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()){
+            Comment comment = cursorToComment(cursor);
+            comments.add(comment);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return comments;
+    }
+
+
+    private Comment cursorToComment(Cursor cursor){
+        Comment comment = new Comment();
+
+        comment.setText(cursor.getString(0));
+        comment.setrepoID(cursor.getInt(1));
+
+        return comment;
+    }
+
+    public Comment getComment(Comment comment){
+        String select = "SELECT * FROM " + COMMENT_TABLE_NAME + " WHERE " + COLUMN_COMMENT_ID + " = " + comment.getRepoID();
+        Cursor c = db.query(COMMENT_TABLE_NAME, ALL_COLUMNS_COMMENT, select, null, null, null, null);
+        return cursorToComment(c);
     }
 }

@@ -100,5 +100,8 @@
     </string-array>
 
     <string name="title_activity_repository_description">Repository Details</string>
+    <string name="title_activity_comments">CommentsActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 
 </resources>

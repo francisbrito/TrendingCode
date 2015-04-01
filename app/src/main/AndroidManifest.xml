@@ -26,6 +26,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="example.com.trendingcode.MainActivity" />
         </activity>
+        <activity
+            android:name=".CommentsActivity"
+            android:label="@string/title_activity_comments" >
+        </activity>
     </application>
 
 </manifest>

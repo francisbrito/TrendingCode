@@ -18,9 +18,10 @@ import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity {
     public static final String REPO = "repo";
+    public static final String COMMENT = "comment";
     MultiAutoCompleteTextView searchBox;
     Button searchBtn;
-    ListView list, commentsList;
+    ListView list;
     ProgressBar progressBar;
 
     ArrayAdapter<GithubRepository> searchResultAdapter;
@@ -35,7 +36,6 @@ public class MainActivity extends ActionBarActivity {
         searchBox = (MultiAutoCompleteTextView) findViewById(R.id.searchBox);
         searchBtn = (Button) findViewById(R.id.searchBtn);
         list = (ListView) findViewById(R.id.resultsList);
-        commentsList = (ListView) findViewById(R.id.commentslistView);
 
         searchResultAdapter = new GithubRepositoryArrayAdapter(
                 this,
@@ -168,8 +168,9 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_comments) {
+            Intent intent = new Intent(this, CommentsActivity.class);
+            MainActivity.this.startActivity(intent);
         }
         else if (id == R.id.action_exit) {
             finish();

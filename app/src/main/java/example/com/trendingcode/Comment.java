@@ -5,31 +5,15 @@ package example.com.trendingcode;
  */
 public class Comment {
 
-    private int id;
     private String text;
+    private int repoID;
 
-    public Comment(int id, String txt){
-        this.id = id;
-        this.text = txt;
+    public Comment(String text, int repoID){
+        this.text = text;
+        this.repoID = repoID;
     }
 
-    /**
-     * Sets the id.
-     *
-     * @param  id
-     */
-    public void setId(int id){
-        this.id = id;
-    }
-
-    /**
-     * Gets the id.
-     *
-     * @return id
-     */
-    public int getId(){
-        return this.id;
-    }
+    public Comment(){}
 
     /**
      * Sets the text.
@@ -47,5 +31,23 @@ public class Comment {
      */
     public String getText(){
         return this.text;
+    }
+
+    /**
+     * Sets the repository ID.
+     *
+     * @param  id
+     */
+    public void setrepoID(Integer id){
+        this.repoID = id;
+    }
+
+    /**
+     * Gets the repository ID.
+     *
+     * @return id
+     */
+    public Integer getRepoID(){
+        return this.repoID;
     }
 }
