@@ -134,13 +134,14 @@ public class MainActivity extends ActionBarActivity {
             String fullName = repository.getFullName();
             // TODO-francisbrito: Add this field.
             String url = "";
+            String language = repository.getLanguage();
             String description = repository.getDescription();
             Integer stars = repository.getStargazersCount();
             Integer watchers = repository.getWatchersCount();
             // TODO-francisbrito: Add this field.
             Integer forks = 0;
             // TODO-francisbrito: Fix #toString calls.
-            dbHelper.insertRepo(id, name, fullName, url, description,
+            dbHelper.insertRepo(id, name, fullName, language, description,
                     stars.toString(), watchers.toString(), forks.toString());
         }
     }

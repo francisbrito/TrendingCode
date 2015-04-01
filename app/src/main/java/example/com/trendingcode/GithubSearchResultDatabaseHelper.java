@@ -89,14 +89,14 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean insertRepo(Integer id, String name, String fullName, String url, String description, String startGazers, String watchers, String forks){
+    public boolean insertRepo(Integer id, String name, String fullName, String languange, String description, String startGazers, String watchers, String forks){
         db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(COLUMN_REPOSITORY_ID, id);
         cv.put(COLUMN_REPOSITORY_NAME, name);
         cv.put(COLUMN_REPOSITORY_FULL_NAME, fullName);
-        cv.put(COLUMN_REPOSITORY_LANGUAGE, url);
+        cv.put(COLUMN_REPOSITORY_LANGUAGE, languange);
         cv.put(COLUMN_REPOSITORY_DESCRIPTION, description);
         cv.put(COLUMN_REPOSITORY_STARS, startGazers);
         cv.put(COLUMN_REPOSITORY_WATCHERS, watchers);

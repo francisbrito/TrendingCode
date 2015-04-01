@@ -30,7 +30,7 @@ public class DetailsActivity extends ActionBarActivity {
             description.setText(repo.getDescription());
             stars.setText(repo.getStargazersCount().toString());
             watchers.setText(repo.getWatchersCount().toString());
-            language.setText(repo.getWatchersCount().toString());
+            language.setText(repo.getLanguage());
         }catch (Exception e){
             Log.e("DetailActivity", "Error occurred", e);
         }
