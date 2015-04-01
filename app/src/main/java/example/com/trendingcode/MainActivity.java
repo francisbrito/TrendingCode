@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class MainActivity extends ActionBarActivity {
     MultiAutoCompleteTextView searchBox;
     Button searchBtn;
-    ListView list;
+    ListView list, commentsList;
     ProgressBar progressBar;
 
     ArrayAdapter<GithubRepository> searchResultAdapter;
@@ -32,6 +32,8 @@ public class MainActivity extends ActionBarActivity {
         searchBox = (MultiAutoCompleteTextView) findViewById(R.id.searchBox);
         searchBtn = (Button) findViewById(R.id.searchBtn);
         list = (ListView) findViewById(R.id.resultsList);
+        commentsList = (ListView) findViewById(R.id.commentslistView);
+
         searchResultAdapter = new GithubRepositoryArrayAdapter(
                 this,
                 R.layout.search_result_item,
