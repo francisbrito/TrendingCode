@@ -3,7 +3,9 @@ package example.com.trendingcode;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class GithubRepository {
+import java.io.Serializable;
+
+public class GithubRepository implements Serializable{
     private static final String ID_FIELD = "id";
     private static final String NAME_FIELD = "name";
     private static final String FULL_NAME_FIELD = "full_name";

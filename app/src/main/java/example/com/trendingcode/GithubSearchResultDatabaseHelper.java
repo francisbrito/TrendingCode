@@ -28,7 +28,10 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_REPOSITORY_DESCRIPTION = "description";
     public static final String COLUMN_REPOSITORY_STARS = "stars";
     public static final String COLUMN_REPOSITORY_WATCHERS = "watchers";
-
+	
+	public static final String[] ALL_COLUMNS_REPOSITORY = new String[] {COLUMN_REPOSITORY_ID, COLUMN_REPOSITORY_NAME, COLUMN_REPOSITORY_FULL_NAME, COLUMN_REPOSITORY_LANGUAGE,
+                                                                                    COLUMN_REPOSITORY_DESCRIPTION, COLUMN_REPOSITORY_STARS, COLUMN_REPOSITORY_WATCHERS};
+	
     public static final String CREATE_REPOSITORY_TABLE =
             "CREATE TABLE " +
                 REPOSITORY_TABLE_NAME +
@@ -53,9 +56,10 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
                 COMMENT_TABLE_NAME +
                 "( " +
                     COLUMN_COMMENT_ID + " integer primary key, " +
-                    COLUMN_COMMENT_BODY + " text" +
-                    "FOREIGN KEY( " + COLUMN_COMMENT_FOREIGN_KEY_REPOSITORY_ID + " )" +
-                    "REFERENCES ( " + COLUMN_REPOSITORY_ID  + " )" +
+                    COLUMN_COMMENT_BODY + " text, " +
+                    COLUMN_COMMENT_FOREIGN_KEY_REPOSITORY_ID + " integer, " +
+                    "FOREIGN KEY(" + COLUMN_COMMENT_FOREIGN_KEY_REPOSITORY_ID + ") " +
+                    "REFERENCES " + REPOSITORY_TABLE_NAME + "(" + COLUMN_REPOSITORY_ID  + ")" +
                 ")";
 
     public GithubSearchResultDatabaseHelper(Context context) {
@@ -85,14 +89,14 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean insertRepo(Integer id, String name, String fullName, String url, String description, String startGazers, String watchers, String forks){
+    public boolean insertRepo(Integer id, String name, String fullName, String languange, String description, String startGazers, String watchers, String forks){
         db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(COLUMN_REPOSITORY_ID, id);
         cv.put(COLUMN_REPOSITORY_NAME, name);
         cv.put(COLUMN_REPOSITORY_FULL_NAME, fullName);
-        cv.put(COLUMN_REPOSITORY_LANGUAGE, url);
+        cv.put(COLUMN_REPOSITORY_LANGUAGE, languange);
         cv.put(COLUMN_REPOSITORY_DESCRIPTION, description);
         cv.put(COLUMN_REPOSITORY_STARS, startGazers);
         cv.put(COLUMN_REPOSITORY_WATCHERS, watchers);
@@ -111,7 +115,8 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
 
         List<GithubRepository> repos = new ArrayList<>();
 
-        Cursor cursor = db.query(REPOSITORY_TABLE_NAME, new String[] {COLUMN_REPOSITORY_ID, COLUMN_REPOSITORY_NAME, COLUMN_REPOSITORY_FULL_NAME, COLUMN_REPOSITORY_LANGUAGE, COLUMN_REPOSITORY_DESCRIPTION, COLUMN_REPOSITORY_STARS, COLUMN_REPOSITORY_WATCHERS}, null, null, null, null, null);
+        Cursor cursor = db.query(REPOSITORY_TABLE_NAME, ALL_COLUMNS_REPOSITORY, null, null, null, null, null);
+
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()){
@@ -142,6 +147,12 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
         onUpgrade(db, DATABASE_VERSION, DATABASE_VERSION);
     }
 
+    public GithubRepository getRepo(GithubRepository repo){
+        String select = "SELECT * FROM " + REPOSITORY_TABLE_NAME + " WHERE " + COLUMN_REPOSITORY_ID + " = " + repo.getID();
+        Cursor c = db.query(REPOSITORY_TABLE_NAME, ALL_COLUMNS_REPOSITORY, select, null, null, null, null);
+        return cursorToRepo(c);
+	}
+	
     public void insertComment(int repositoryId, String body) {
         SQLiteDatabase db = getWritableDatabase();
 
