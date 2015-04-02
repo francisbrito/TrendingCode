@@ -112,6 +112,6 @@
     <string name="repository_watchers">Watchers:</string>
     <string name="repository_language">Language:</string>
     <string name="comments">Comments</string>
-    <string name="add_comment">Agregar</string>
+    <string name="add_comment">Add</string>
 
 </resources>
