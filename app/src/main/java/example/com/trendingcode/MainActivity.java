@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.ProgressBar;
@@ -160,6 +161,7 @@ public class MainActivity extends ActionBarActivity {
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -167,9 +169,10 @@ public class MainActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_comments) {
-            Intent intent = new Intent(this, CommentsActivity.class);
+        if (id == R.id.action_settings) {
+            return true;
+        }else if (id == R.id.action_comments) {
+            Intent intent = new Intent(MainActivity.this, CommentsActivity.class);
             MainActivity.this.startActivity(intent);
         }
         else if (id == R.id.action_exit) {
@@ -179,4 +182,5 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

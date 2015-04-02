@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import org.w3c.dom.*;
 
@@ -172,11 +173,13 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public List<Comment> getAllComments(){
+        db = this.getReadableDatabase();
         List<Comment> comments = new ArrayList<>();
 
         Cursor cursor = db.query(COMMENT_TABLE_NAME, ALL_COLUMNS_COMMENT, null, null, null, null, null);
-
         cursor.moveToFirst();
+
+        Log.i("Probando","ColumnCount: " + cursor.getColumnCount());
 
         while (!cursor.isAfterLast()){
             Comment comment = cursorToComment(cursor);
@@ -192,8 +195,8 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
     private Comment cursorToComment(Cursor cursor){
         Comment comment = new Comment();
 
-        comment.setText(cursor.getString(0));
-        comment.setrepoID(cursor.getInt(1));
+        comment.setrepoID(cursor.getInt(0));
+        comment.setText(cursor.getString(1));
 
         return comment;
     }
@@ -203,4 +206,5 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
         Cursor c = db.query(COMMENT_TABLE_NAME, ALL_COLUMNS_COMMENT, select, null, null, null, null);
         return cursorToComment(c);
     }
+
 }
