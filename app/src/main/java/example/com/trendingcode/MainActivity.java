@@ -173,7 +173,7 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }else if (id == R.id.action_comments) {
             Intent intent = new Intent(MainActivity.this, CommentsActivity.class);
-            MainActivity.this.startActivity(intent);
+            startActivity(intent);
         }
         else if (id == R.id.action_exit) {
             finish();

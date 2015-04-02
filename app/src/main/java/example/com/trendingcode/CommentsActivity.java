@@ -29,19 +29,11 @@ public class CommentsActivity extends ActionBarActivity {
 
         ListView listView = (ListView) findViewById(R.id.commentsListView);
 
-
         List<Comment> commentsArray = dbHelper.getAllComments();
-
-        Log.e("Probando","# de arreglo de comentarios: " + commentsArray.size());
 
         ArrayList<String> arrayList = new ArrayList<>();
 
-
-        for(int i = 0; i <= commentsArray.size(); i++){
-
-            Log.i(TAG,String.valueOf(i));
-            Log.i(TAG,commentsArray.get(i).getText());
-
+        for(int i = 0; i < commentsArray.size(); i++){
             Comment comment = commentsArray.get(i);
             arrayList.add(comment.getRepoID() + ":  " + comment.getText());
         }

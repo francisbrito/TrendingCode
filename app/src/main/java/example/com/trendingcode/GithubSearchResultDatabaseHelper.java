@@ -212,8 +212,6 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        List<Comment> comments = new ArrayList<>();
-
         Cursor cursor = db.query(
                 COMMENT_TABLE_NAME,
                 ALL_COLUMNS_COMMENT,
@@ -224,8 +222,6 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
                 null);
 
         cursor.moveToFirst();
-
-        Log.i("Probando","ColumnCount: " + cursor.getColumnCount());
 
         while (!cursor.isAfterLast()){
             Comment comment = cursorToComment(cursor);
