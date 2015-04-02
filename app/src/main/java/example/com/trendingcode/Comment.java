@@ -50,4 +50,9 @@ public class Comment {
     public Integer getRepoID(){
         return this.repoID;
     }
+
+    @Override
+    public String toString() {
+        return this.text;
+    }
 }
