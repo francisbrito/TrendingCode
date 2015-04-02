@@ -172,6 +172,8 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public List<Comment> getAllComments(){
+        SQLiteDatabase db = getWritableDatabase();
+
         List<Comment> comments = new ArrayList<>();
 
         Cursor cursor = db.query(COMMENT_TABLE_NAME, ALL_COLUMNS_COMMENT, null, null, null, null, null);
