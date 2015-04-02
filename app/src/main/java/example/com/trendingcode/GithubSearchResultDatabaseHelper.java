@@ -104,7 +104,7 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean insertRepo(Integer id, String name, String fullName,
-                              String languange, String description,
+                              String language, String description,
                               String startGazers, String watchers, String forks){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -113,7 +113,7 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_REPOSITORY_ID, id);
         cv.put(COLUMN_REPOSITORY_NAME, name);
         cv.put(COLUMN_REPOSITORY_FULL_NAME, fullName);
-        cv.put(COLUMN_REPOSITORY_LANGUAGE, languange);
+        cv.put(COLUMN_REPOSITORY_LANGUAGE, language);
         cv.put(COLUMN_REPOSITORY_DESCRIPTION, description);
         cv.put(COLUMN_REPOSITORY_STARS, startGazers);
         cv.put(COLUMN_REPOSITORY_WATCHERS, watchers);
@@ -130,7 +130,7 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
     public List<GithubRepository> getAllRepo(){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        List<GithubRepository> repos = new ArrayList<>();
+        List<GithubRepository> repositories = new ArrayList<>();
 
         Cursor cursor = db.query(
                 REPOSITORY_TABLE_NAME,
@@ -145,12 +145,12 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
 
         while (!cursor.isAfterLast()){
             GithubRepository repo = cursorToRepo(cursor);
-            repos.add(repo);
+            repositories.add(repo);
             cursor.moveToNext();
         }
 
         cursor.close();
-        return repos;
+        return repositories;
     }
 
     private GithubRepository cursorToRepo(Cursor cursor){
