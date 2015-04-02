@@ -51,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold|italic"
-            android:text="Desciption:" />
+            android:text="Description:" />
 
         <TextView android:id="@+id/txtDescription"
             android:layout_weight="1"
