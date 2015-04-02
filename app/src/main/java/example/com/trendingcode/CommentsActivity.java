@@ -20,22 +20,29 @@ import java.util.List;
 public class CommentsActivity extends ActionBarActivity {
 
     public static final String TAG = CommentsActivity.class.getSimpleName();
-    Context context = this;
+    GithubSearchResultDatabaseHelper dbHelper = new GithubSearchResultDatabaseHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
+
         ListView listView = (ListView) findViewById(R.id.commentsListView);
-        GithubSearchResultDatabaseHelper dbHelper = new GithubSearchResultDatabaseHelper(context);
 
-        List<Comment> commentsArray = new ArrayList<>();
-        commentsArray = dbHelper.getAllComments();
+        List<Comment> commentsArray = dbHelper.getAllComments();
 
-        ArrayAdapter<Comment> arrayAdapter = new ArrayAdapter<>(
+        ArrayList<String> arrayList = new ArrayList<>();
+
+        for(int i = 0; i < commentsArray.size(); i++){
+            Comment comment = commentsArray.get(i);
+            arrayList.add(comment.getRepoID() + ":  " + comment.getText());
+        }
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,
-                commentsArray);
+                arrayList );
+
 
         listView.setAdapter(arrayAdapter);
 
