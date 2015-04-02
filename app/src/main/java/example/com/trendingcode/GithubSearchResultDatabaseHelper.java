@@ -17,8 +17,6 @@ import java.util.List;
 public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 2;
 
-    SQLiteDatabase db;
-
     public static final String DATABASE_NAME = "trending_code.db";
 
     public static final String REPOSITORY_TABLE_NAME = "repository";
@@ -95,7 +93,8 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean insertRepo(Integer id, String name, String fullName, String languange, String description, String startGazers, String watchers, String forks){
-        db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
+
         ContentValues cv = new ContentValues();
 
         cv.put(COLUMN_REPOSITORY_ID, id);
@@ -116,7 +115,7 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public List<GithubRepository> getAllRepo(){
-        db = this.getReadableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
 
         List<GithubRepository> repos = new ArrayList<>();
 
@@ -149,10 +148,14 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void clearRepositories() {
+        SQLiteDatabase db = this.getWritableDatabase();
+
         onUpgrade(db, DATABASE_VERSION, DATABASE_VERSION);
     }
 
     public GithubRepository getRepo(GithubRepository repo){
+        SQLiteDatabase db = this.getReadableDatabase();
+
         String select = "SELECT * FROM " + REPOSITORY_TABLE_NAME + " WHERE " + COLUMN_REPOSITORY_ID + " = " + repo.getID();
         Cursor c = db.query(REPOSITORY_TABLE_NAME, ALL_COLUMNS_REPOSITORY, select, null, null, null, null);
         return cursorToRepo(c);
@@ -161,7 +164,7 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
 
 
     public void insertComment(int repositoryId, String body) {
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
 
@@ -172,7 +175,7 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public List<Comment> getAllComments(){
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
 
         List<Comment> comments = new ArrayList<>();
 
@@ -201,6 +204,8 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Comment getComment(Comment comment){
+        SQLiteDatabase db = this.getReadableDatabase();
+        
         String select = "SELECT * FROM " + COMMENT_TABLE_NAME + " WHERE " + COLUMN_COMMENT_ID + " = " + comment.getRepoID();
         Cursor c = db.query(COMMENT_TABLE_NAME, ALL_COLUMNS_COMMENT, select, null, null, null, null);
         return cursorToComment(c);
