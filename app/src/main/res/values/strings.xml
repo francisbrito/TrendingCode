@@ -103,5 +103,7 @@
     <string name="title_activity_comments">CommentsActivity</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="action_show_comments">Comments</string>
+    <string name="action_exit_app">Exit</string>
 
 </resources>
