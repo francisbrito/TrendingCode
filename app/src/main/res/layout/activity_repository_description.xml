@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold|italic"
-            android:text="Name:" />
+            android:text="@string/repository_name" />
 
         <TextView android:id="@+id/txtName"
             android:layout_weight="1"
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold|italic"
-            android:text="Full Name:" />
+            android:text="@string/repository_full_name" />
 
         <TextView android:id="@+id/txtFullName"
             android:layout_weight="1"
@@ -51,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold|italic"
-            android:text="Description:" />
+            android:text="@string/repository_description" />
 
         <TextView android:id="@+id/txtDescription"
             android:layout_weight="1"
@@ -69,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold|italic"
-            android:text="Stars Gazers:" />
+            android:text="@string/repository_stars" />
 
         <TextView android:id="@+id/txtStarsGazers"
             android:layout_weight="1"
@@ -87,7 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold|italic"
-            android:text="Watchers:" />
+            android:text="@string/repository_watchers" />
 
         <TextView android:id="@+id/txtWatchers"
             android:layout_weight="1"
@@ -105,7 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold|italic"
-            android:text="Language:" />
+            android:text="@string/repository_language" />
 
         <TextView android:id="@+id/txtLanguage"
             android:layout_weight="1"
@@ -123,7 +123,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Comments"
+            android:text="@string/comments"
             android:id="@+id/textView" />
 
         <LinearLayout
@@ -140,7 +140,7 @@
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Agregar"
+                android:text="@string/add_comment"
                 android:id="@+id/buttonAddComment"
                 android:layout_gravity="right" />
         </LinearLayout>
