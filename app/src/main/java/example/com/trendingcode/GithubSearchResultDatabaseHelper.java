@@ -99,7 +99,7 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
         super.onOpen(db);
 
         if (!db.isReadOnly()) {
-            db.execSQL("PRAGMA foreign_keys=ON");
+            db.execSQL("PRAGMA foreign_keys=OFF");
         }
     }
 
