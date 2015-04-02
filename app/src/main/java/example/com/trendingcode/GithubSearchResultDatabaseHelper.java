@@ -29,8 +29,15 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_REPOSITORY_STARS = "stars";
     public static final String COLUMN_REPOSITORY_WATCHERS = "watchers";
 	
-	public static final String[] ALL_COLUMNS_REPOSITORY = new String[] {COLUMN_REPOSITORY_ID, COLUMN_REPOSITORY_NAME, COLUMN_REPOSITORY_FULL_NAME, COLUMN_REPOSITORY_LANGUAGE,
-                                                                                    COLUMN_REPOSITORY_DESCRIPTION, COLUMN_REPOSITORY_STARS, COLUMN_REPOSITORY_WATCHERS};
+	public static final String[] ALL_COLUMNS_REPOSITORY = new String[] {
+            COLUMN_REPOSITORY_ID,
+            COLUMN_REPOSITORY_NAME,
+            COLUMN_REPOSITORY_FULL_NAME,
+            COLUMN_REPOSITORY_LANGUAGE,
+            COLUMN_REPOSITORY_DESCRIPTION,
+            COLUMN_REPOSITORY_STARS,
+            COLUMN_REPOSITORY_WATCHERS
+    };
 	
     public static final String CREATE_REPOSITORY_TABLE =
             "CREATE TABLE " +
@@ -51,7 +58,11 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_COMMENT_BODY = "body";
     private static final String COLUMN_COMMENT_FOREIGN_KEY_REPOSITORY_ID = "repository_id";
 
-    public static final String[] ALL_COLUMNS_COMMENT = new String[] {COLUMN_COMMENT_ID, COLUMN_COMMENT_BODY, COLUMN_COMMENT_FOREIGN_KEY_REPOSITORY_ID};
+    public static final String[] ALL_COLUMNS_COMMENT = new String[] {
+            COLUMN_COMMENT_ID,
+            COLUMN_COMMENT_BODY,
+            COLUMN_COMMENT_FOREIGN_KEY_REPOSITORY_ID
+    };
 
 
     public static final String CREATE_COMMENT_TABLE =
@@ -92,7 +103,9 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean insertRepo(Integer id, String name, String fullName, String languange, String description, String startGazers, String watchers, String forks){
+    public boolean insertRepo(Integer id, String name, String fullName,
+                              String languange, String description,
+                              String startGazers, String watchers, String forks){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues cv = new ContentValues();
@@ -119,7 +132,14 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
 
         List<GithubRepository> repos = new ArrayList<>();
 
-        Cursor cursor = db.query(REPOSITORY_TABLE_NAME, ALL_COLUMNS_REPOSITORY, null, null, null, null, null);
+        Cursor cursor = db.query(
+                REPOSITORY_TABLE_NAME,
+                ALL_COLUMNS_REPOSITORY,
+                null,
+                null,
+                null,
+                null,
+                null);
 
         cursor.moveToFirst();
 
@@ -156,8 +176,20 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
     public GithubRepository getRepo(GithubRepository repo){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String select = "SELECT * FROM " + REPOSITORY_TABLE_NAME + " WHERE " + COLUMN_REPOSITORY_ID + " = " + repo.getID();
-        Cursor c = db.query(REPOSITORY_TABLE_NAME, ALL_COLUMNS_REPOSITORY, select, null, null, null, null);
+        String select =
+                "SELECT * FROM " +
+                    REPOSITORY_TABLE_NAME +
+                " WHERE "
+                        + COLUMN_REPOSITORY_ID + " = " + repo.getID();
+        Cursor c = db.query(
+                REPOSITORY_TABLE_NAME,
+                ALL_COLUMNS_REPOSITORY,
+                select,
+                null,
+                null,
+                null,
+                null);
+
         return cursorToRepo(c);
 	}
 
@@ -179,7 +211,14 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
 
         List<Comment> comments = new ArrayList<>();
 
-        Cursor cursor = db.query(COMMENT_TABLE_NAME, ALL_COLUMNS_COMMENT, null, null, null, null, null);
+        Cursor cursor = db.query(
+                COMMENT_TABLE_NAME,
+                ALL_COLUMNS_COMMENT,
+                null,
+                null,
+                null,
+                null,
+                null);
 
         cursor.moveToFirst();
 
@@ -205,9 +244,21 @@ public class GithubSearchResultDatabaseHelper extends SQLiteOpenHelper {
 
     public Comment getComment(Comment comment){
         SQLiteDatabase db = this.getReadableDatabase();
-        
-        String select = "SELECT * FROM " + COMMENT_TABLE_NAME + " WHERE " + COLUMN_COMMENT_ID + " = " + comment.getRepoID();
-        Cursor c = db.query(COMMENT_TABLE_NAME, ALL_COLUMNS_COMMENT, select, null, null, null, null);
+
+        String select =
+                "SELECT * FROM " +
+                        COMMENT_TABLE_NAME +
+                " WHERE " +
+                        COLUMN_COMMENT_ID + " = " + comment.getRepoID();
+        Cursor c = db.query(
+                COMMENT_TABLE_NAME,
+                ALL_COLUMNS_COMMENT,
+                select,
+                null,
+                null,
+                null,
+                null);
+
         return cursorToComment(c);
     }
 }
